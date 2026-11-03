@@ -1,0 +1,65 @@
+name: ML IC-PBL
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "machine-learning-ic-pbl/**"
+      - ".github/workflows/ml-ic-pbl.yml"
+  pull_request:
+    paths:
+      - "machine-learning-ic-pbl/**"
+
+defaults:
+  run:
+    working-directory: machine-learning-ic-pbl
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: machine-learning-ic-pbl/pyproject.toml
+
+      - name: Install CPU torch first (keeps the wheel small)
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[dev]"
+
+      - name: Unit tests
+        run: pytest -q
+
+      - name: End-to-end smoke run on synthetic data
+        run: |
+          python - <<'PY'
+          import os, numpy as np
+          rng = np.random.default_rng(0)
+          for label in ["circle", "diagonal_left", "diagonal_right", "horizontal", "vertical"]:
+              folder = os.path.join("data", "raw", label)
+              os.makedirs(folder, exist_ok=True)
+              for i in range(3):
+                  lines = []
+                  for _ in range(3):
+                      lines.append("s,0,,#")
+                      for _ in range(60):
+                          body = ",".join(
+                              "/".join(str(int(v)) for v in rng.integers(-50, 50, size=n))
+                              for n in (4, 4, 4, 3, 2, 3, 3, 3))
+                          lines.append(f"r,{int(rng.integers(1e4, 2e4))},{int(rng.integers(1e6, 2e6))},{body},,#")
+                  open(os.path.join(folder, f"{i+1}.txt"), "w").write("\n".join(lines) + "\n")
+          PY
+          python -m rehab_cls.train --data-root data/raw --out-dir runs/ci \
+              --cv 2 --epochs 3 --batch-size 8 --hidden 16 --quiet
+          python -m rehab_cls.evaluate --checkpoint runs/ci/checkpoint.pt \
+              --data-root data/raw --split test

@@ -1,0 +1,22 @@
+{
+  "logreg": {
+    "accuracy_mean": 0.8529332306688631,
+    "accuracy_std": 0.1093562285994235,
+    "macro_f1_mean": 0.8209214269276189,
+    "macro_f1_std": 0.14167470093299253,
+    "recording_accuracy_mean": 0.8916666666666667,
+    "recording_accuracy_std": 0.1163219721693741,
+    "recording_macro_f1_mean": 0.8697777777777779,
+    "recording_macro_f1_std": 0.14976261050800646
+  },
+  "svm_rbf": {
+    "accuracy_mean": 0.8798263486194521,
+    "accuracy_std": 0.10700845795370925,
+    "macro_f1_mean": 0.8532797722859642,
+    "macro_f1_std": 0.14227943588892225,
+    "recording_accuracy_mean": 0.8916666666666667,
+    "recording_accuracy_std": 0.1163219721693741,
+    "recording_macro_f1_mean": 0.8693333333333334,
+    "recording_macro_f1_std": 0.14928570669096963
+  }
+}

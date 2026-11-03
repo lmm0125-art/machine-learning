@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Experiment outputs (checkpoints are large; keep metrics but not weights)
+runs/*/
+!runs/.gitkeep
+*.pth
+*.pt
+
+# Course data must not be redistributed
+data/raw/
+data/demo/
+data/*.zip
+
+# macOS
+.DS_Store
