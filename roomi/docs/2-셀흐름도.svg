@@ -1,0 +1,81 @@
+<svg viewBox="0 0 680 430" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>셀 흐름도 (재화 흐름)</title>
+<desc>셀의 획득처와 소비처. 미니게임·스트릭·부품보너기 등 실제 구현된 재화 흐름</desc>
+<defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+<g font-family="sans-serif">
+<text x="340" y="26" font-size="15" font-weight="500" fill="#25324a" text-anchor="middle">재화(셀) 흐름도 · 획득처와 소비처 (2026-10 실제 구현 기준)</text>
+
+<text x="150" y="56" font-size="13" font-weight="500" fill="#042C53" text-anchor="middle">획득처 (EARN)</text>
+<text x="340" y="56" font-size="13" font-weight="500" fill="#412402" text-anchor="middle">셀 지갑</text>
+<text x="545" y="56" font-size="13" font-weight="500" fill="#04342C" text-anchor="middle">소비처 (SPEND)</text>
+
+<rect x="45" y="70" width="110" height="36" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="100" y="92" font-size="12" fill="#042C53" text-anchor="middle">가입 보너스</text>
+
+<rect x="45" y="114" width="110" height="36" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.8"/>
+<text x="100" y="133" font-size="12" fill="#412402" text-anchor="middle">★ 로봇 제작 보상</text>
+<text x="100" y="146" font-size="10" fill="#854F0B" text-anchor="middle">+50 셀 + 부품 1개</text>
+
+<rect x="45" y="158" width="110" height="36" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.8"/>
+<text x="100" y="177" font-size="12" fill="#412402" text-anchor="middle">★ 오늘의 AI 과제</text>
+<text x="100" y="190" font-size="10" fill="#854F0B" text-anchor="middle">+30 셀 (매일 반복)</text>
+
+<rect x="45" y="202" width="110" height="44" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+<text x="100" y="221" font-size="12" font-weight="500" fill="#26215C" text-anchor="middle">★ 미니게임</text>
+<text x="100" y="234" font-size="10" fill="#534AB7" text-anchor="middle">반사속도 +10~50</text>
+<text x="100" y="243" font-size="10" fill="#534AB7" text-anchor="middle">기억순서 +50~110</text>
+
+<rect x="45" y="254" width="110" height="44" rx="8" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.8"/>
+<text x="100" y="272" font-size="12" fill="#173404" text-anchor="middle">★ 연속 방문 보상</text>
+<text x="100" y="286" font-size="10" fill="#3B6D11" text-anchor="middle">10/15/25/35/50/60/100</text>
+<text x="100" y="295" font-size="9" fill="#3B6D11" text-anchor="middle">7일 순환 · 28일 +200</text>
+
+<rect x="45" y="306" width="110" height="36" rx="8" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.8"/>
+<text x="100" y="322" font-size="12" fill="#501313" text-anchor="middle">★ 부품 보너스</text>
+<text x="100" y="336" font-size="10" fill="#A32D2D" text-anchor="middle">부품 1개당 +2 (최대+10)</text>
+
+<rect x="268" y="130" width="145" height="90" rx="14" fill="#FFF7E6" stroke="#A06A00" stroke-width="1"/>
+<text x="340" y="164" font-size="14" font-weight="500" fill="#A06A00" text-anchor="middle">🪙 셀 지갑</text>
+<text x="340" y="186" font-size="11" fill="#A06A00" text-anchor="middle">cell_tx 전체 거래내역 기록</text>
+<text x="340" y="203" font-size="10" fill="#A06A00" text-anchor="middle">(+과제 / -구매 구분)</text>
+
+<rect x="490" y="70" width="120" height="42" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+<text x="550" y="88" font-size="12" font-weight="500" fill="#04342C" text-anchor="middle">로봇 부품</text>
+<text x="550" y="104" font-size="10" fill="#0F6E56" text-anchor="middle">나사60·리본80·부스터120</text>
+
+<rect x="490" y="120" width="120" height="42" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+<text x="550" y="138" font-size="12" fill="#04342C" text-anchor="middle">방 장식</text>
+<text x="550" y="154" font-size="10" fill="#0F6E56" text-anchor="middle">별40 · 선물상자100</text>
+
+<rect x="490" y="170" width="120" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+<text x="550" y="190" font-size="12" font-weight="500" fill="#26215C" text-anchor="middle">★ 색칠 스킨</text>
+<text x="550" y="205" font-size="10" fill="#534AB7" text-anchor="middle">파랑·핑크·민트·노랑 30</text>
+<text x="550" y="219" font-size="10" fill="#534AB7" text-anchor="middle">구매 즉시 로봇 색 변경</text>
+
+<rect x="490" y="234" width="120" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.8"/>
+<text x="550" y="254" font-size="12" font-weight="500" fill="#412402" text-anchor="middle">★ 부품 조각</text>
+<text x="550" y="269" font-size="10" fill="#854F0B" text-anchor="middle">20셀 · 반복 구매</text>
+<text x="550" y="283" font-size="10" font-weight="500" fill="#854F0B">3개 → 부품 1개 교환</text>
+
+<rect x="490" y="298" width="120" height="44" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="550" y="317" font-size="12" fill="#042C53" text-anchor="middle">전시 → 자랑</text>
+<text x="550" y="333" font-size="10" fill="#185FA5" text-anchor="middle">재접속 동기</text>
+
+<line x1="157" y1="88" x2="264" y2="150" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="157" y1="132" x2="264" y2="162" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="157" y1="176" x2="264" y2="176" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="157" y1="224" x2="264" y2="190" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="157" y1="276" x2="264" y2="204" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="157" y1="324" x2="264" y2="214" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+
+<line x1="415" y1="158" x2="486" y2="96" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="415" y1="170" x2="486" y2="142" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="415" y1="182" x2="486" y2="198" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="415" y1="196" x2="486" y2="260" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+<line x1="415" y1="208" x2="486" y2="320" stroke="#5F5E5A" stroke-width="1.2" marker-end="url(#a2)"/>
+
+<path d="M550 344 C 550 400, 100 400, 100 348" fill="none" stroke="#A32D2D" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#a2)"/>
+<text x="325" y="418" font-size="11" fill="#A32D2D" text-anchor="middle">구매한 부품·스킨 = 내일 꾸미고 싶은 이유 → 재접속 (순환)</text>
+<text x="325" y="392" font-size="10" fill="#5F5E5A" text-anchor="middle">부품을 산 만큼 과제 보상이 올라가므로 '살 이유'가 계속 생긴다</text>
+</g>
+</svg>

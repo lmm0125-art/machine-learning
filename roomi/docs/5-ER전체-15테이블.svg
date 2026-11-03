@@ -1,0 +1,276 @@
+<svg viewBox="0 0 1200 925" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>루미 데이터베이스 ER Diagram</title>
+<desc>15개 엔터티, 주 외래키, UNIQUE 제약을 포함한 전체 데이터 모델</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+<g font-family="sans-serif"><text x="600" y="34" font-size="19" font-weight="600" fill="#25324a" text-anchor="middle" font-family="sans-serif">루미(RooMi) 데이터베이스 ER Diagram — 15개 엔터티 · 주 외래키 · 유일성 제약</text>
+<text x="600" y="56" font-size="12" fill="#5F5E5A" text-anchor="middle" font-family="sans-serif">SQLite (node:sqlite 내장) · PK 🔑 · FK → 대상 · ★ UNIQUE 제약(게임 규칙을 DB 수준에서 강제)</text>
+<g>
+  <rect x="250" y="96" width="210" height="154" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="250" y="96" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="355" y="110" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">👤 users</text>
+<text x="258" y="126" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="354" y="126" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="258" y="140" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">★ nickname</text>
+<text x="354" y="140" font-size="9" fill="#2C2C2A" font-family="sans-serif">UNIQUE</text>
+<text x="258" y="154" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">cell_balance</text>
+<text x="258" y="168" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">level · exp</text>
+<text x="258" y="182" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">streak · last_visit</text>
+<text x="258" y="196" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">parent_ok</text>
+<text x="258" y="210" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">play_minutes</text>
+<text x="258" y="224" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">token</text>
+<text x="258" y="238" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">created_at</text>
+<text x="355" y="250" font-size="8.5" fill="#A32D2D" font-weight="600" text-anchor="middle" font-family="sans-serif">모든 데이터의 중심 (1)</text>
+</g>
+<g>
+  <rect x="470" y="96" width="210" height="112" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="470" y="96" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="575" y="110" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🤖 robots</text>
+<text x="478" y="126" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="574" y="126" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="478" y="140" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="574" y="140" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id  ★UNIQUE(1기)</text>
+<text x="478" y="154" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">name · template</text>
+<text x="478" y="168" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">palette</text>
+<text x="574" y="168" font-size="9" fill="#2C2C2A" font-family="sans-serif">내가 칠한 색</text>
+<text x="478" y="182" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">personality · greeting</text>
+<text x="574" y="182" font-size="9" fill="#2C2C2A" font-family="sans-serif">AI 생성</text>
+<text x="478" y="196" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">created_at</text>
+</g>
+<g>
+  <rect x="470" y="216" width="210" height="84" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="470" y="216" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="575" y="230" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🎒 inventory</text>
+<text x="478" y="246" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="574" y="246" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="478" y="260" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="574" y="260" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="478" y="274" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">item_id</text>
+<text x="574" y="274" font-size="9" fill="#185FA5" font-family="sans-serif">→ items.id</text>
+<text x="478" y="288" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">qty</text>
+<text x="574" y="288" font-size="9" fill="#2C2C2A" font-family="sans-serif">수량</text>
+</g>
+<g>
+  <rect x="470" y="322" width="210" height="140" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="470" y="322" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="575" y="336" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">📬 mailbox</text>
+<text x="478" y="352" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="574" y="352" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="478" y="366" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="574" y="366" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="478" y="380" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">title · body</text>
+<text x="478" y="394" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">cell</text>
+<text x="574" y="394" font-size="9" fill="#2C2C2A" font-family="sans-serif">수령 보상</text>
+<text x="478" y="408" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">item_id</text>
+<text x="574" y="408" font-size="9" fill="#185FA5" font-family="sans-serif">→ items.id (선택)</text>
+<text x="478" y="422" font-size="9.5" fill="#A32D2D" font-weight="700" font-family="sans-serif">tag</text>
+<text x="574" y="422" font-size="9" fill="#A32D2D" font-family="sans-serif">★UNIQUE(중복발송차단)</text>
+<text x="478" y="436" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">claimed</text>
+<text x="574" y="436" font-size="9" fill="#2C2C2A" font-family="sans-serif">0/1</text>
+<text x="478" y="450" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">ts</text>
+</g>
+<g>
+  <rect x="24" y="96" width="210" height="112" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="24" y="96" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="129" y="110" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🏷 items</text>
+<text x="32" y="126" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="128" y="126" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="32" y="140" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">name</text>
+<text x="32" y="154" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">type</text>
+<text x="128" y="154" font-size="9" fill="#2C2C2A" font-family="sans-serif">part/decor/skin/shard</text>
+<text x="32" y="168" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">price</text>
+<text x="128" y="168" font-size="9" fill="#2C2C2A" font-family="sans-serif">정가</text>
+<text x="32" y="182" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">consumable</text>
+<text x="128" y="182" font-size="9" fill="#2C2C2A" font-family="sans-serif">반복구매 여부</text>
+<text x="32" y="196" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">limited_days</text>
+<text x="128" y="196" font-size="9" fill="#2C2C2A" font-family="sans-serif">주말한정(V11)</text>
+<text x="129" y="208" font-size="8.5" fill="#A32D2D" font-weight="600" text-anchor="middle" font-family="sans-serif">상점 기준 데이터</text>
+</g>
+<g>
+  <rect x="24" y="236" width="210" height="84" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="24" y="236" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="129" y="250" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">💬 robot_lines</text>
+<text x="32" y="266" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="128" y="266" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="32" y="280" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">personality</text>
+<text x="32" y="294" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">situation</text>
+<text x="32" y="308" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">line</text>
+<text x="128" y="308" font-size="9" fill="#2C2C2A" font-family="sans-serif">AI 대사 프리셋</text>
+</g>
+<g>
+  <rect x="24" y="352" width="210" height="112" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="24" y="352" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="129" y="366" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">📋 daily_quests</text>
+<text x="32" y="382" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="128" y="382" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="32" y="396" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">quest_date</text>
+<text x="32" y="410" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">type</text>
+<text x="128" y="410" font-size="9" fill="#2C2C2A" font-family="sans-serif">feed/praise/ai</text>
+<text x="32" y="424" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">title</text>
+<text x="32" y="438" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">reward</text>
+<text x="32" y="452" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">topic</text>
+<text x="128" y="452" font-size="9" fill="#2C2C2A" font-family="sans-serif">이번 주 주제(V12)</text>
+</g>
+<g>
+  <rect x="24" y="482" width="210" height="98" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="24" y="482" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="129" y="496" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">📚 weekly_topics</text>
+<text x="32" y="512" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="128" y="512" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="32" y="526" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">★ week_start</text>
+<text x="128" y="526" font-size="9" fill="#2C2C2A" font-family="sans-serif">UNIQUE (주1회)</text>
+<text x="32" y="540" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">chapter</text>
+<text x="128" y="540" font-size="9" fill="#2C2C2A" font-family="sans-serif">도로랜드 CH.</text>
+<text x="32" y="554" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">topic</text>
+<text x="128" y="554" font-size="9" fill="#2C2C2A" font-family="sans-serif">수업 주제</text>
+<text x="32" y="568" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">keywords</text>
+</g>
+<g>
+  <rect x="700" y="96" width="210" height="98" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="700" y="96" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="805" y="110" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">📅 visits</text>
+<text x="708" y="126" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="804" y="126" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="708" y="140" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="804" y="140" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="708" y="154" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">entered_at</text>
+<text x="804" y="154" font-size="9" fill="#2C2C2A" font-family="sans-serif">접속 시각</text>
+<text x="708" y="168" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">duration</text>
+<text x="804" y="168" font-size="9" fill="#2C2C2A" font-family="sans-serif">체류(초)</text>
+<text x="708" y="182" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">last_beat</text>
+<text x="804" y="182" font-size="9" fill="#2C2C2A" font-family="sans-serif">멱등 가드</text>
+<text x="805" y="194" font-size="8.5" fill="#A32D2D" font-weight="600" text-anchor="middle" font-family="sans-serif">재접속률·체류시간 원천</text>
+</g>
+<g>
+  <rect x="700" y="196" width="210" height="98" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="700" y="196" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="805" y="210" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🪙 cell_tx</text>
+<text x="708" y="226" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="804" y="226" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="708" y="240" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="804" y="240" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="708" y="254" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">amount</text>
+<text x="804" y="254" font-size="9" fill="#2C2C2A" font-family="sans-serif">+획득 / −소비</text>
+<text x="708" y="268" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">source</text>
+<text x="804" y="268" font-size="9" fill="#2C2C2A" font-family="sans-serif">출처</text>
+<text x="708" y="282" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">ts</text>
+<text x="805" y="294" font-size="8.5" fill="#A32D2D" font-weight="600" text-anchor="middle" font-family="sans-serif">셀 사용량 원천</text>
+</g>
+<g>
+  <rect x="700" y="306" width="210" height="112" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="700" y="306" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="805" y="320" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">📝 quest_logs</text>
+<text x="708" y="336" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="804" y="336" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="708" y="350" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="804" y="350" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="708" y="364" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">quest_id</text>
+<text x="804" y="364" font-size="9" fill="#185FA5" font-family="sans-serif">→ daily_quests.id</text>
+<text x="708" y="378" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">reward</text>
+<text x="708" y="392" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">★ UNIQUE(user,quest)</text>
+<text x="804" y="392" font-size="9" fill="#2C2C2A" font-family="sans-serif">하루1회 차단</text>
+<text x="708" y="406" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">ts</text>
+</g>
+<g>
+  <rect x="700" y="416" width="210" height="112" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="700" y="416" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="805" y="430" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🎮 game_logs</text>
+<text x="708" y="446" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="804" y="446" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="708" y="460" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="804" y="460" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="708" y="474" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">day · kind</text>
+<text x="708" y="488" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">score · reward</text>
+<text x="708" y="502" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">★ UNIQUE(user,day,kind)</text>
+<text x="804" y="502" font-size="9" fill="#2C2C2A" font-family="sans-serif">게임별 1일1회</text>
+<text x="708" y="516" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">ts</text>
+</g>
+<g>
+  <rect x="700" y="526" width="210" height="98" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="700" y="526" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="805" y="540" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🖱 interact_logs</text>
+<text x="708" y="556" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="804" y="556" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="708" y="570" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="804" y="570" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="708" y="584" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">day · situation</text>
+<text x="708" y="598" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">★ UNIQUE(user,day,sit)</text>
+<text x="804" y="598" font-size="9" fill="#2C2C2A" font-family="sans-serif">상호작용 1일1회</text>
+<text x="708" y="612" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">ts</text>
+</g>
+<g>
+  <rect x="700" y="626" width="210" height="112" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="700" y="626" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="805" y="640" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🏫 class_logs</text>
+<text x="708" y="656" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="804" y="656" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="708" y="670" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="804" y="670" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="708" y="684" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">★ UNIQUE(user,week)</text>
+<text x="804" y="684" font-size="9" fill="#2C2C2A" font-family="sans-serif">수업 출석 주1회</text>
+<text x="708" y="698" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">week_start</text>
+<text x="708" y="712" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">reward</text>
+<text x="804" y="712" font-size="9" fill="#2C2C2A" font-family="sans-serif">+100셀</text>
+<text x="708" y="726" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">ts</text>
+</g>
+<g>
+  <rect x="700" y="736" width="210" height="98" rx="9" fill="#fff" stroke="#185FA5" stroke-width="0.7"/>
+  <rect x="700" y="736" width="210" height="20" rx="9" fill="#185FA5"/>
+  <text x="805" y="750" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">🛠 workshop_logs</text>
+<text x="708" y="766" font-size="9.5" fill="#A06A00" font-weight="700" font-family="sans-serif">🔑 id</text>
+<text x="804" y="766" font-size="9" fill="#A06A00" font-family="sans-serif">PK</text>
+<text x="708" y="780" font-size="9.5" fill="#185FA5" font-weight="400" font-family="sans-serif">user_id</text>
+<text x="804" y="780" font-size="9" fill="#185FA5" font-family="sans-serif">→ users.id</text>
+<text x="708" y="794" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">day · kind</text>
+<text x="804" y="794" font-size="9" fill="#2C2C2A" font-family="sans-serif">색칠/재생성/질문</text>
+<text x="708" y="808" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">★ UNIQUE(user,day,kind)</text>
+<text x="804" y="808" font-size="9" fill="#2C2C2A" font-family="sans-serif">일일 한도 강제</text>
+<text x="708" y="822" font-size="9.5" fill="#2C2C2A" font-weight="400" font-family="sans-serif">ts</text>
+</g>
+<path d="M460 173 C 465 173, 465 110, 470 110" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="470" cy="110" r="3" fill="#185FA5"/>
+<path d="M460 173 C 465 173, 465 230, 470 230" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="470" cy="230" r="3" fill="#185FA5"/>
+<path d="M460 173 C 465 173, 465 336, 470 336" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="470" cy="336" r="3" fill="#185FA5"/>
+<path d="M460 173 C 580 173, 580 110, 700 110" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="700" cy="110" r="3" fill="#185FA5"/>
+<path d="M460 173 C 580 173, 580 210, 700 210" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="700" cy="210" r="3" fill="#185FA5"/>
+<path d="M460 173 C 580 173, 580 320, 700 320" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="700" cy="320" r="3" fill="#185FA5"/>
+<path d="M460 173 C 580 173, 580 430, 700 430" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="700" cy="430" r="3" fill="#185FA5"/>
+<path d="M460 173 C 580 173, 580 540, 700 540" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="700" cy="540" r="3" fill="#185FA5"/>
+<path d="M460 173 C 580 173, 580 640, 700 640" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="700" cy="640" r="3" fill="#185FA5"/>
+<path d="M460 173 C 580 173, 580 750, 700 750" fill="none" stroke="#888780" stroke-width="1.1" marker-end="url(#ar)"/>
+<circle cx="460" cy="173" r="3" fill="#185FA5"/><circle cx="700" cy="750" r="3" fill="#185FA5"/>
+<path d="M470 258 C 430 126, 274 126, 234 152" fill="none" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<path d="M470 392 C 430 126, 274 126, 234 152" fill="none" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<path d="M700 362 C 660 336, 274 336, 234 408" fill="none" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<path d="M470 152 C 430 126, 274 126, 234 278" fill="none" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<g font-family="sans-serif">
+<rect x="24" y="600" width="200" height="120" rx="9" fill="#F7F9FC" stroke="#DDE5EE" stroke-width="0.6"/>
+<text x="36" y="622" font-size="11.5" font-weight="700" fill="#25324a">범례</text>
+<text x="36" y="642" font-size="10" fill="#A06A00">🔑 기본키 (Primary Key)</text>
+<text x="36" y="660" font-size="10" fill="#185FA5">→ 외래키 (Foreign Key)</text>
+<text x="36" y="678" font-size="10" fill="#A32D2D">★ UNIQUE 제약 (비즈니스 규칙)</text>
+<text x="36" y="696" font-size="10" fill="#5F5E5A">실선 = user_id 귀속 (1:N)</text>
+<text x="36" y="712" font-size="10" fill="#5F5E5A">점선 = 논리 참조 (기준 데이터)</text>
+</g>
+<g font-family="sans-serif">
+<rect x="24" y="736" width="640" height="132" rx="9" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.6"/>
+<text x="40" y="760" font-size="12" font-weight="700" fill="#2C2C2A">제약이 만드는 게임 규칙 (UNIQUE 7종)</text>
+<text x="40" y="780" font-size="10.5" fill="#2C2C2A">· robots(user_id) — 로봇은 1기만 / quest_logs(user,quest) — 과제 1회만 보상</text>
+<text x="40" y="797" font-size="10.5" fill="#2C2C2A">· game_logs(user,day,kind) — 게임 종류별 하루 1회 / interact_logs(user,day,situation) — 상호작용 1일 1회</text>
+<text x="40" y="814" font-size="10.5" fill="#2C2C2A">· class_logs(user,week) — 수업 출석 주 1회 / workshop_logs(user,day,kind) — 공작소 기능 일일 1회</text>
+<text x="40" y="831" font-size="10.5" fill="#2C2C2A">· mailbox(user,tag) — 같은 보상 우편 중복 발송 차단 / weekly_topics(week_start) — 주제 주 1회</text>
+<text x="40" y="854" font-size="10.5" fill="#A32D2D">→ 부정 행위를 애플리케이션이 아닌 DB 수준에서 차단. 동시 요청·브라우저 조작으로도 뚫리지 않는다.</text>
+</g>
+<g font-family="sans-serif">
+<rect x="700" y="852" width="210" height="48" rx="9" fill="#EEF4FB" stroke="#B4C7DE" stroke-width="0.6"/>
+<text x="714" y="872" font-size="11" font-weight="700" fill="#25324a">성능 인덱스 3종</text>
+<text x="714" y="888" font-size="9.5" fill="#2C2C2A">visits(user,entered_at) · mailbox(user,claimed) · interact_logs(user,day,sit)</text>
+</g></g>
+</svg>

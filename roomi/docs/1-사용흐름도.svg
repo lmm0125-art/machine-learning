@@ -1,0 +1,62 @@
+<svg viewBox="0 0 680 400" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>사용 흐름도</title>
+<desc>접속부터 재접속까지의 사용자 여정 6단계와 새로 추가된 미니게임·성장·부모승인·시간관리</desc>
+<defs>
+<marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round"/></marker>
+</defs>
+<g font-family="sans-serif">
+<text x="340" y="26" font-size="15" font-weight="500" fill="#25324a" text-anchor="middle">사용 흐름도 · 접속 → 만들기 → AI → 마이룸 → 보상 → 재접속</text>
+
+<rect x="40" y="52" width="180" height="70" rx="12" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="130" y="80" font-size="13" font-weight="500" fill="#042C53" text-anchor="middle">① 접속 (닉네임)</text>
+<text x="130" y="100" font-size="11" fill="#185FA5" text-anchor="middle">신규 웰컴 셀 100</text>
+
+<rect x="250" y="52" width="180" height="70" rx="12" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="340" y="80" font-size="13" font-weight="500" fill="#042C53" text-anchor="middle">② 로봇 만들기</text>
+<text x="340" y="100" font-size="11" fill="#185FA5" text-anchor="middle">선화 선택 → 색칠 → 이름</text>
+
+<rect x="460" y="52" width="180" height="70" rx="12" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text x="550" y="80" font-size="13" font-weight="500" fill="#412402" text-anchor="middle">③ AI 성격 부여</text>
+<text x="550" y="100" font-size="11" fill="#854F0B" text-anchor="middle">색 조합 → 성격·대사 생성</text>
+
+<rect x="460" y="168" width="180" height="86" rx="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="550" y="192" font-size="13" font-weight="500" fill="#04342C" text-anchor="middle">④ 마이룸 생활</text>
+<text x="550" y="210" font-size="11" fill="#0F6E56" text-anchor="middle">인사 · 간식 · 칭찬 · AI 과제</text>
+<text x="550" y="227" font-size="11" fill="#0F6E56" text-anchor="middle">오늘의 과제 (질문 → 답하기 +30)</text>
+<text x="550" y="244" font-size="11" fill="#0F6E56" text-anchor="middle">일일 4단계 진행 표시</text>
+
+<rect x="250" y="168" width="180" height="86" rx="12" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text x="340" y="192" font-size="13" font-weight="500" fill="#412402" text-anchor="middle">⑤ 셀 획득 · 소비</text>
+<text x="340" y="210" font-size="11" fill="#854F0B" text-anchor="middle">과제 보상 → 상점 부품 구매</text>
+<text x="340" y="227" font-size="11" fill="#854F0B" text-anchor="middle">스트릭 7일 순환 / 28일 완주 +200</text>
+<text x="340" y="244" font-size="11" fill="#854F0B" text-anchor="middle">부품 1개당 과제 보상 +2 (최대 +10)</text>
+
+<rect x="40" y="168" width="180" height="86" rx="12" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="130" y="192" font-size="13" font-weight="500" fill="#042C53" text-anchor="middle">⑥ 재접속</text>
+<text x="130" y="210" font-size="11" fill="#185FA5" text-anchor="middle">매일 바뀌는 AI 과제</text>
+<text x="130" y="227" font-size="11" fill="#185FA5" text-anchor="middle">로봇 성격이 배색에 반응</text>
+<text x="130" y="244" font-size="11" fill="#185FA5" text-anchor="middle">부품 꾸미기 → 다시 접속</text>
+
+<rect x="40" y="296" width="285" height="76" rx="12" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="182" y="319" font-size="13" font-weight="500" fill="#26215C" text-anchor="middle">★ 미니게임 (난이도 곡선)</text>
+<text x="182" y="337" font-size="11" fill="#534AB7" text-anchor="middle">⚡ 반사 속도 +10~50셀</text>
+<text x="182" y="353" font-size="11" fill="#534AB7" text-anchor="middle">🧠 기억 순서 +50~110셀 (1~9단계)</text>
+
+<rect x="355" y="296" width="285" height="76" rx="12" fill="#FBEAF0" stroke="#993556" stroke-width="0.5"/>
+<text x="497" y="319" font-size="13" font-weight="500" fill="#4B1528" text-anchor="middle">★ 안전 · 시간 관리 (평가 필수)</text>
+<text x="497" y="337" font-size="11" fill="#993556" text-anchor="middle">🔒 부모 승인 게이트 (곱셈 문제)</text>
+<text x="497" y="353" font-size="11" fill="#993556" text-anchor="middle">⏱ 하루 40분 초과 시 잠금</text>
+
+<line x1="220" y1="87" x2="246" y2="87" stroke="#888780" stroke-width="1.5" marker-end="url(#a1)"/>
+<line x1="430" y1="87" x2="456" y2="87" stroke="#888780" stroke-width="1.5" marker-end="url(#a1)"/>
+<path d="M550 122 L550 164" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#a1)"/>
+<line x1="456" y1="211" x2="434" y2="211" stroke="#888780" stroke-width="1.5" marker-end="url(#a1)"/>
+<line x1="246" y1="211" x2="224" y2="211" stroke="#888780" stroke-width="1.5" marker-end="url(#a1)"/>
+<path d="M340 254 L340 292" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#a1)"/>
+<path d="M497 254 L497 292" fill="none" stroke="#993556" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#a1)"/>
+
+<text x="130" y="284" font-size="11" fill="#888780" text-anchor="middle">↺ 순환: 꾸미고 싶어 다시 접속</text>
+
+<text x="340" y="390" font-size="12" fill="#5F5E5A" text-anchor="middle">⑤→② 순환이 재접속의 근거가 되고, ④에서 미니게임·과제로 셀을 얻는 구조</text>
+</g>
+</svg>

@@ -1,7 +1,7 @@
 # Code review: what was wrong with the first submission
 
-The original pipeline was two notebooks cells (`train_with_labels_visual.py` and
-`inference_attention.py`, kept in `code.txt`). It ran end-to-end on Colab, but a
+The original pipeline was two Colab cells (`train_with_labels_visual.py` and
+`inference_attention.py`), preserved unchanged in [`legacy/ml_code.ipynb`](../legacy/ml_code.ipynb). It ran end-to-end on Colab, but a
 large part of what it reported was not what it measured. This document lists
 every defect that was found, the evidence for it, and how the current code
 handles it.

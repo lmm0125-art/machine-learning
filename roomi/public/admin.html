@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>루미 운영자 페이지</title>
+<style>
+  :root{ --primary:#185FA5; --ink:#042C53; --bg:#E6F1FB; --line:#DDE5EE; --sub:#5F5E5A; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif; background:#f6f8fb; color:#25324a; }
+  header{ background:var(--ink); color:#fff; padding:14px 22px; display:flex; align-items:center; gap:12px; }
+  header h1{ font-size:17px; margin:0; font-weight:700; }
+  header .who{ margin-left:auto; font-size:12px; opacity:.85; }
+  main{ max-width:1080px; margin:0 auto; padding:20px; }
+  .panel{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px; margin-bottom:16px; }
+  .panel h2{ font-size:15px; margin:0 0 12px; color:var(--ink); }
+  .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
+  label{ font-size:12px; color:var(--sub); display:block; margin-bottom:4px; }
+  input,select,textarea{ padding:9px 10px; border:1px solid var(--line); border-radius:8px; font:inherit; font-size:14px; }
+  input:focus,textarea:focus{ outline:2px solid #b9d4f0; border-color:var(--primary); }
+  button{ padding:10px 16px; border:0; border-radius:8px; background:var(--primary); color:#fff; font:inherit; font-size:14px; cursor:pointer; }
+  button.ghost{ background:#fff; color:var(--primary); border:1px solid var(--primary); }
+  button:disabled{ opacity:.5; cursor:not-allowed; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+  .kpi{ background:var(--bg); border-radius:10px; padding:12px; }
+  .kpi b{ display:block; font-size:22px; color:var(--ink); }
+  .kpi span{ font-size:11.5px; color:var(--sub); }
+  table{ width:100%; border-collapse:collapse; font-size:12.5px; margin-top:10px; }
+  th,td{ text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th{ color:var(--sub); font-weight:600; }
+  .msg{ margin-top:10px; font-size:13px; padding:10px 12px; border-radius:8px; display:none; }
+  .msg.ok{ display:block; background:#e7f5ee; color:#0b6e4f; }
+  .msg.err{ display:block; background:#fdecec; color:#a12828; }
+  .hidden{ display:none; }
+  .note{ font-size:12px; color:var(--sub); line-height:1.6; margin-top:8px; }
+  .login-wrap{ max-width:360px; margin:80px auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛠 루미 운영자 페이지</h1>
+  <span class="who" id="who"></span>
+</header>
+
+<main>
+  <!-- 로그인 -->
+  <div id="login-panel" class="panel login-wrap">
+    <h2>운영자 키 입력</h2>
+    <p class="note">이 페이지는 교사·운영자 전용입니다. 배포 환경변수 <b>ADMIN_KEY</b> 와 같은 값을 넣어주세요.</p>
+    <div class="row" style="margin-top:10px">
+      <input id="key" type="password" placeholder="ADMIN_KEY" style="flex:1">
+      <button id="btn-login">들어가기</button>
+    </div>
+    <div class="msg err" id="login-msg"></div>
+  </div>
+
+  <!-- 본문 -->
+  <div id="admin-body" class="hidden">
+
+    <div class="panel">
+      <h2>📊 지표 요약</h2>
+      <div class="grid" id="kpis"></div>
+      <p class="note">※ 개인 식별 정보(닉네임)는 이 화면에 표시하지 않습니다. 계정별 명단이 필요하면 CSV 를 사용하세요.</p>
+      <div class="row" style="margin-top:10px">
+        <button class="ghost" id="btn-csv">⬇ 계정별 CSV 내보기</button>
+        <button class="ghost" id="btn-cleanup">🧹 시연용 더미 계정 정리</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>📚 이번 주 주제 바꾸기 (AI 과제에 연결)</h2>
+      <div class="row">
+        <div><label>주 시작일</label><input id="topic-week" type="date"></div>
+        <div><label>챕터</label><input id="topic-ch" type="number" min="1" max="9" value="1" style="width:70px"></div>
+        <div style="flex:1;min-width:220px"><label>주제</label><input id="topic-name" placeholder="예: 멈춘 기계의 노래" style="width:100%"></div>
+        <div style="flex:1;min-width:220px"><label>키워드 (쉼표)</label><input id="topic-kw" placeholder="고장, 원인 찾기, 고치기" style="width:100%"></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button id="btn-topic">주제 저장</button>
+        <span class="note" id="topic-now"></span>
+      </div>
+      <div class="msg" id="topic-msg"></div>
+    </div>
+
+    <div class="panel">
+      <h2>📬 우편 보내기 (공지 · 보상)</h2>
+      <div class="row">
+        <div style="flex:1;min-width:240px"><label>제목</label><input id="mail-title" placeholder="예: 이번 주 공지" style="width:100%"></div>
+        <div><label>셀 보상</label><input id="mail-cell" type="number" min="0" max="500" value="0" style="width:90px"></div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <div style="flex:1"><label>내용</label><textarea id="mail-body" rows="2" placeholder="아이들에게 보여줄 내용" style="width:100%"></textarea></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button id="btn-mail">전체 계정에 보내기</button>
+        <span class="note">같은 <b>tag</b> 로 두 번 보내면 중복 발송되지 않습니다.</span>
+      </div>
+      <div class="msg" id="mail-msg"></div>
+    </div>
+
+    <div class="panel">
+      <h2>👥 계정별 현황</h2>
+      <div style="overflow:auto;max-height:320px">
+        <table id="rows">
+          <thead><tr>
+            <th>계정</th><th>Lv</th><th>연속</th><th>잔액</th><th>활동일</th><th>재접속률</th>
+            <th>체류(분)</th><th>과제</th><th>게임</th><th>부품</th><th>로봇</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+let KEY = '';
+
+function showMsg(id, text, ok){
+  const el = $(id); el.textContent = text; el.className = 'msg ' + (ok ? 'ok' : 'err');
+  setTimeout(()=>{ el.className = 'msg'; }, 5000);
+}
+async function api(path, opts){
+  const r = await fetch(path, {
+    ...opts,
+    headers: { 'Content-Type':'application/json', 'X-Admin-Key': KEY, ...(opts && opts.headers) },
+  });
+  const j = await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error || ('오류 ' + r.status));
+  return j;
+}
+
+// 로그인
+$('#btn-login').addEventListener('click', async ()=>{
+  KEY = $('#key').value.trim();
+  try{
+    await api('/api/admin/stats');
+    $('#login-panel').classList.add('hidden');
+    $('#admin-body').classList.remove('hidden');
+    $('#who').textContent = '키 확인 완료';
+    loadAll();
+  }catch(e){ showMsg('#login-msg', e.message, false); }
+});
+$('#key').addEventListener('keydown', e=>{ if(e.key==='Enter') $('#btn-login').click(); });
+
+async function loadAll(){
+  try{
+    const s = await api('/api/admin/stats');
+    const k = [
+      [s.summary.avgReturnRate + '%', '평균 재접속률'],
+      [s.summary.avgPlayMin + '분', '평균 체류시간'],
+      [s.summary.avgActiveDays + '일', '평균 활동 일수'],
+      [s.summary.avgQuests + '개', '평균 과제 제출'],
+      [s.summary.robots + '기', '로봇 보유 계정'],
+      [s.withData + '명', '활동 계정 (전체 ' + s.total + ')'],
+    ];
+    $('#kpis').innerHTML = k.map(([b,t])=>`<div class="kpi"><b>${b}</b><span>${t}</span></div>`).join('');
+    const tb = $('#rows tbody');
+    tb.innerHTML = s.rows.map(r=>`<tr>
+      <td>${esc(r.nickname)}</td><td>${r.level}</td><td>${r.streak}</td><td>${r.balance}</td>
+      <td>${r.activeDays}</td><td>${r.returnRate}%</td><td>${r.playMin}</td>
+      <td>${r.quests}</td><td>${r.games}</td><td>${r.parts}</td><td>${r.hasRobot?'✅':'—'}</td>
+    </tr>`).join('');
+    const t = await api('/api/public/stats').catch(()=>null);
+    if(t) $('#topic-now').textContent = `현재: 참가자 ${t.participants}명 · 평균 재접속률 ${t.avgReturnRate}%`;
+  }catch(e){ showMsg('#login-msg', e.message, false); }
+}
+function esc(v){ return String(v==null?'':v).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// 주제 저장
+$('#btn-topic').addEventListener('click', async ()=>{
+  const week = $('#topic-week').value;
+  const body = { topic: $('#topic-name').value.trim(), chapter: Number($('#topic-ch').value)||1,
+                 keywords: $('#topic-kw').value.trim() };
+  if(week) body.week = week;
+  if(!body.topic) return showMsg('#topic-msg', '주제를 입력해 주세요', false);
+  try{
+    const r = await api('/api/admin/topic', { method:'POST', body: JSON.stringify(body) });
+    showMsg('#topic-msg', '저장 완료: ' + r.topic + ' (' + (r.week||'이번 주') + ')', true);
+  }catch(e){ showMsg('#topic-msg', e.message, false); }
+});
+
+// 우편 발송
+$('#btn-mail').addEventListener('click', async ()=>{
+  const title = $('#mail-title').value.trim();
+  if(!title) return showMsg('#mail-msg', '제목을 입력해 주세요', false);
+  try{
+    const r = await api('/api/admin/mail', { method:'POST',
+      body: JSON.stringify({ title, body: $('#mail-body').value.trim(), cell: Number($('#mail-cell').value)||0, tag: 'notice-' + Date.now() }) });
+    showMsg('#mail-msg', `전체 ${r.sent}/${r.total} 계정에 발송 완료`, true);
+  }catch(e){ showMsg('#mail-msg', e.message, false); }
+});
+
+// CSV / 정리
+$('#btn-csv').addEventListener('click', ()=>{ location.href = '/api/admin/export.csv?key=' + encodeURIComponent(KEY); });
+$('#btn-cleanup').addEventListener('click', async ()=>{
+  if(!confirm('시연용 더미 계정(시연_*)을 삭제할까요?')) return;
+  try{
+    const r = await api('/api/admin/cleanup-demo', { method:'POST', body: '{}' });
+    alert(r.removed + '개 계정을 정리했어요'); loadAll();
+  }catch(e){ alert(e.message); }
+});
+
+// 기본값: 이번 주 월요일
+(function(){
+  const d = new Date(); const day = d.getDay();
+  d.setDate(d.getDate() - (day === 0 ? 6 : day - 1));
+  $('#topic-week').value = d.toISOString().slice(0,10);
+})();
+</script>
+</body>
+</html>

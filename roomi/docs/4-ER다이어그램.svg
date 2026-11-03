@@ -1,0 +1,95 @@
+<svg viewBox="0 0 680 470" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>데이터베이스 구조 (ER)</title>
+<desc>SQLite 12개 테이블 중 핵심 8개 — users 중심 1:N 관계, UNIQUE 제약이 곧 게임 규칙</desc>
+<defs>
+<marker id="er" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round"/></marker>
+</defs>
+<g font-family="sans-serif">
+<text x="340" y="26" font-size="15" font-weight="500" fill="#25324a" text-anchor="middle">데이터베이스 구조 (ER) · SQLite 내장 엔진 · 12개 테이블 중 핵심 8개</text>
+
+<!-- 중앙: users -->
+<rect x="255" y="150" width="170" height="104" rx="12" fill="#FFF7E6" stroke="#A06A00" stroke-width="1.2"/>
+<text x="340" y="172" font-size="14" font-weight="600" fill="#A06A00" text-anchor="middle">👤 users</text>
+<text x="340" y="192" font-size="10.5" fill="#6B4A0B" text-anchor="middle">id PK · nickname UNIQUE</text>
+<text x="340" y="207" font-size="10.5" fill="#6B4A0B" text-anchor="middle">cell_balance · level · exp</text>
+<text x="340" y="222" font-size="10.5" fill="#6B4A0B" text-anchor="middle">streak · last_visit · parent_ok</text>
+<text x="340" y="240" font-size="10" font-weight="500" fill="#A06A00" text-anchor="middle">모든 데이터의 중심 (1)</text>
+
+<!-- 좌상: robots -->
+<rect x="30" y="60" width="165" height="72" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.6"/>
+<text x="112" y="80" font-size="12.5" font-weight="500" fill="#042C53" text-anchor="middle">🤖 robots</text>
+<text x="112" y="97" font-size="10" fill="#185FA5" text-anchor="middle">user_id → UNIQUE (1기)</text>
+<text x="112" y="112" font-size="10" fill="#185FA5" text-anchor="middle">name · template · palette</text>
+<text x="112" y="126" font-size="9.5" fill="#5F5E5A" text-anchor="middle">내가 칠한 색이 여기 저장</text>
+
+<!-- 우상: inventory + items -->
+<rect x="485" y="52" width="165" height="58" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.6"/>
+<text x="567" y="72" font-size="12.5" font-weight="500" fill="#042C53" text-anchor="middle">🎒 inventory</text>
+<text x="567" y="89" font-size="10" fill="#185FA5" text-anchor="middle">user_id → · item_id → · qty</text>
+<text x="567" y="103" font-size="9.5" fill="#5F5E5A" text-anchor="middle">qty&gt;0 만 조회 (V3 수정)</text>
+
+<rect x="485" y="122" width="165" height="54" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.6"/>
+<text x="567" y="141" font-size="12.5" font-weight="500" fill="#26215C" text-anchor="middle">🏷 items</text>
+<text x="567" y="158" font-size="10" fill="#534AB7" text-anchor="middle">name · type · price · consumable</text>
+<text x="567" y="171" font-size="9.5" fill="#5F5E5A" text-anchor="middle">part·decor·skin·shard 10종</text>
+
+<!-- 우중: cell_tx -->
+<rect x="485" y="196" width="165" height="66" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+<text x="567" y="216" font-size="12.5" font-weight="500" fill="#04342C" text-anchor="middle">🪙 cell_tx (원장)</text>
+<text x="567" y="233" font-size="10" fill="#0F6E56" text-anchor="middle">user_id → · amount ± · source</text>
+<text x="567" y="247" font-size="9.5" fill="#5F5E5A" text-anchor="middle">획득/소비 전부 기록</text>
+<text x="567" y="258" font-size="9.5" fill="#0F6E56" text-anchor="middle">→ 셀 사용량 지표의 원천</text>
+
+<!-- 좌중: quest_logs -->
+<rect x="30" y="180" width="165" height="70" rx="10" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/>
+<text x="112" y="200" font-size="12.5" font-weight="500" fill="#412402" text-anchor="middle">📋 quest_logs</text>
+<text x="112" y="217" font-size="10" fill="#854F0B" text-anchor="middle">user_id → · quest_id · reward</text>
+<text x="112" y="232" font-size="10" font-weight="600" fill="#A32D2D" text-anchor="middle">⏱ idx_quest_user UNIQUE</text>
+<text x="112" y="245" font-size="9.5" fill="#A32D2D" text-anchor="middle">= 하루 1회 (이중 수령 차단)</text>
+
+<!-- 중하: game_logs -->
+<rect x="30" y="272" width="165" height="70" rx="10" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.6"/>
+<text x="112" y="292" font-size="12.5" font-weight="500" fill="#412402" text-anchor="middle">🎮 game_logs</text>
+<text x="112" y="309" font-size="10" fill="#854F0B" text-anchor="middle">user_id → · kind · score · reward</text>
+<text x="112" y="324" font-size="10" font-weight="600" fill="#A32D2D" text-anchor="middle">⏱ idx_game_daily UNIQUE</text>
+<text x="112" y="337" font-size="9.5" fill="#A32D2D" text-anchor="middle">= 게임별 하루 1회 (셀 파밍 차단)</text>
+
+<!-- 중하2: visits -->
+<rect x="255" y="300" width="170" height="86" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.6"/>
+<text x="340" y="320" font-size="12.5" font-weight="500" fill="#04342C" text-anchor="middle">📅 visits</text>
+<text x="340" y="337" font-size="10" fill="#0F6E56" text-anchor="middle">user_id → · entered_at · duration</text>
+<text x="340" y="352" font-size="10" fill="#0F6E56" text-anchor="middle">idx_visits_user · last_beat(멱등)</text>
+<text x="340" y="369" font-size="9.5" font-weight="500" fill="#0F6E56" text-anchor="middle">→ 재접속률 + 체류시간 지표의</text>
+<text x="340" y="381" font-size="9.5" font-weight="500" fill="#0F6E56" text-anchor="middle">유일한 데이터 원천 (W13)</text>
+
+<!-- 우하: weekly_topics -->
+<rect x="485" y="286" width="165" height="70" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.6"/>
+<text x="567" y="306" font-size="12.5" font-weight="500" fill="#26215C" text-anchor="middle">📚 weekly_topics</text>
+<text x="567" y="323" font-size="10" fill="#534AB7" text-anchor="middle">week UNIQUE · title · questions</text>
+<text x="567" y="338" font-size="10" font-weight="600" fill="#A32D2D" text-anchor="middle">⏱ idx_topic_week UNIQUE</text>
+<text x="567" y="351" font-size="9.5" fill="#5F5E5A" text-anchor="middle">V12: AI 과제 ↔ 주간 수업 주제</text>
+
+<!-- 관계선 (users → 각 테이블, 1:N) -->
+<line x1="255" y1="170" x2="199" y2="112" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="222" y="130" font-size="9.5" fill="#888780" text-anchor="middle">1:N</text>
+<line x1="425" y1="172" x2="481" y2="98" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="458" y="128" font-size="9.5" fill="#888780" text-anchor="middle">1:N</text>
+<line x1="425" y1="196" x2="481" y2="222" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="458" y="214" font-size="9.5" fill="#888780" text-anchor="middle">1:N</text>
+<line x1="255" y1="196" x2="199" y2="216" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="222" y="212" font-size="9.5" fill="#888780" text-anchor="middle">1:N</text>
+<line x1="255" y1="224" x2="199" y2="300" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="222" y="266" font-size="9.5" fill="#888780" text-anchor="middle">1:N</text>
+<line x1="340" y1="254" x2="340" y2="296" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="352" y="280" font-size="9.5" fill="#888780">1:N</text>
+<line x1="425" y1="240" x2="481" y2="312" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="458" y="282" font-size="9.5" fill="#888780" text-anchor="middle">1:N</text>
+<line x1="567" y1="176" x2="567" y2="192" stroke="#888780" stroke-width="1.3" marker-end="url(#er)"/>
+<text x="578" y="187" font-size="9" fill="#888780">N:1</text>
+
+<!-- 하단: 수치 근거 -->
+<rect x="30" y="402" width="620" height="52" rx="10" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.5"/>
+<text x="340" y="422" font-size="11.5" font-weight="500" fill="#2C2C2A" text-anchor="middle">prepare 파라미터 바인딩 122건(SQL 인젝션 차단) · SUM/COUNT 집계 24건(리포트 지표) · ALTER TABLE 12건(멱등 마이그레이션)</text>
+<text x="340" y="442" font-size="11.5" font-weight="500" fill="#2C2C2A" text-anchor="middle">🔴 UNIQUE 제약 4종 = 부정 행위를 앱 코드가 아닌 DB 수준에서 차단 (동시 요청·브라우저 조작 불가)</text>
+</g>
+</svg>

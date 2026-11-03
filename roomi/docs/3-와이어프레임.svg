@@ -1,0 +1,84 @@
+<svg viewBox="0 0 680 480" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>화면 구조 (wireframe) · 4 화면</title>
+<desc>만들기·마이룸·상점·리포트 4개 화면의 실제 구현 구조와 지표</desc>
+
+<g font-family="sans-serif">
+<text x="340" y="26" font-size="15" font-weight="500" fill="#25324a" text-anchor="middle">화면 구조 (wireframe) · 4 화면 (2026-10 실제 구현)</text>
+
+<rect x="40" y="44" width="285" height="196" rx="14" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.8"/>
+<text x="182" y="68" font-size="13" font-weight="500" fill="#042C53" text-anchor="middle">① 만들기</text>
+<rect x="56" y="82" width="112" height="30" rx="6" fill="#fff" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="112" y="101" font-size="11" fill="#185FA5" text-anchor="middle">캐릭터 선택 4종</text>
+<rect x="180" y="82" width="129" height="30" rx="6" fill="#fff" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="244" y="101" font-size="11" fill="#185FA5" text-anchor="middle">색 팔레트 12색</text>
+<rect x="56" y="120" width="253" height="52" rx="6" fill="#fff" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="182" y="141" font-size="11" font-weight="500" fill="#042C53" text-anchor="middle">색칠 캔버스</text>
+<text x="182" y="158" font-size="10" fill="#185FA5" text-anchor="middle">부위 클릭 (안테나 · 머리 · 몸통 · 팔 · 다리)</text>
+<rect x="56" y="180" width="122" height="28" rx="6" fill="#fff" stroke="#85B7EB" stroke-width="0.5"/>
+<text x="117" y="198" font-size="11" fill="#185FA5" text-anchor="middle">이름 입력</text>
+<rect x="190" y="180" width="119" height="28" rx="6" fill="#2f6fd6" stroke="#185FA5" stroke-width="0.5"/>
+<text x="249" y="198" font-size="11" fill="#fff" text-anchor="middle">완성! (AI 생성)</text>
+<text x="182" y="228" font-size="10" fill="#5F5E5A" text-anchor="middle">완성 시 +50셀 + 부품 1개 + 성격 / 인사말 생성</text>
+
+<rect x="355" y="44" width="285" height="196" rx="14" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+<text x="497" y="68" font-size="13" font-weight="500" fill="#04342C" text-anchor="middle">② 마이룸 (3D)</text>
+<rect x="371" y="82" width="150" height="66" rx="6" fill="#fff" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="446" y="100" font-size="11" font-weight="500" fill="#04342C" text-anchor="middle">3D 로봇 (내가 칠한 색)</text>
+<text x="446" y="117" font-size="10" fill="#0F6E56" text-anchor="middle">Babylon.js · 마우스 회전</text>
+<text x="446" y="132" font-size="10" fill="#0F6E56" text-anchor="middle">대기 중 자동 산책</text>
+<rect x="529" y="82" width="95" height="66" rx="6" fill="#fff" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="576" y="99" font-size="10" fill="#0F6E56" text-anchor="middle">말풍선 (AI 대사)</text>
+<text x="576" y="114" font-size="10" fill="#0F6E56" text-anchor="middle">성격 · 소개</text>
+<text x="576" y="129" font-size="10" fill="#0F6E56" text-anchor="middle">Lv · 성장단계</text>
+<text x="576" y="143" font-size="10" fill="#0F6E56" text-anchor="middle">스트릭 · 부품보너스</text>
+<rect x="371" y="156" width="253" height="24" rx="6" fill="#FFF7E6" stroke="#FAC775" stroke-width="0.5"/>
+<text x="497" y="172" font-size="11" fill="#854F0B" text-anchor="middle">오늘의 과제 4단계 진행 표시 (간식 → 칭찬 → AI → 게임)</text>
+<rect x="371" y="186" width="122" height="22" rx="6" fill="#fff" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="432" y="201" font-size="10" fill="#0F6E56" text-anchor="middle">🍪 간식 · 💬 칭찬</text>
+<rect x="502" y="186" width="122" height="22" rx="6" fill="#fff" stroke="#5DCAA5" stroke-width="0.5"/>
+<text x="563" y="201" font-size="10" fill="#0F6E56" text-anchor="middle">🎮 미니게임 2종</text>
+<text x="497" y="228" font-size="10" fill="#5F5E5A" text-anchor="middle">3D 실패 시 2D SVG 자동 강등 (폴백)</text>
+
+<rect x="40" y="256" width="285" height="196" rx="14" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.8"/>
+<text x="182" y="280" font-size="13" font-weight="500" fill="#412402" text-anchor="middle">③ 상점</text>
+<rect x="56" y="294" width="122" height="52" rx="6" fill="#fff" stroke="#EF9F27" stroke-width="0.5"/>
+<text x="117" y="312" font-size="11" fill="#412402" text-anchor="middle">로봇 부품</text>
+<text x="117" y="327" font-size="10" fill="#854F0B" text-anchor="middle">나사60 · 리본80</text>
+<text x="117" y="341" font-size="10" fill="#854F0B" text-anchor="middle">부스터120</text>
+<rect x="190" y="294" width="119" height="52" rx="6" fill="#fff" stroke="#EF9F27" stroke-width="0.5"/>
+<text x="249" y="312" font-size="11" fill="#412402" text-anchor="middle">방 장식</text>
+<text x="249" y="327" font-size="10" fill="#854F0B" text-anchor="middle">별40 · 선물100</text>
+<text x="249" y="341" font-size="10" fill="#854F0B" text-anchor="middle">3D 방에 실제 배치</text>
+<rect x="56" y="354" width="122" height="52" rx="6" fill="#fff" stroke="#EF9F27" stroke-width="0.5"/>
+<text x="117" y="372" font-size="11" font-weight="500" fill="#412402" text-anchor="middle">★ 색칠 스킨 (반복)</text>
+<text x="117" y="387" font-size="10" fill="#854F0B" text-anchor="middle">4종 30셀</text>
+<text x="117" y="401" font-size="10" fill="#A32D2D" text-anchor="middle">구매 즉시 색 변경</text>
+<rect x="190" y="354" width="119" height="52" rx="6" fill="#fff" stroke="#EF9F27" stroke-width="0.5"/>
+<text x="249" y="372" font-size="11" font-weight="500" fill="#412402" text-anchor="middle">★ 부품 조각 (반복)</text>
+<text x="249" y="387" font-size="10" fill="#854F0B" text-anchor="middle">20셀 × 반복 구매</text>
+<text x="249" y="401" font-size="10" fill="#3B6D11" text-anchor="middle">3개 → 부품 1개 교환</text>
+<rect x="56" y="414" width="253" height="26" rx="6" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.5"/>
+<text x="182" y="431" font-size="11" fill="#2C2C2A" text-anchor="middle">🎒 내 부품함 (보유 목록 + 수량 배지)</text>
+
+<rect x="355" y="256" width="285" height="196" rx="14" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+<text x="497" y="280" font-size="13" font-weight="500" fill="#26215C" text-anchor="middle">④ 리포트 (효과 검증 지표)</text>
+<rect x="371" y="294" width="118" height="40" rx="6" fill="#fff" stroke="#AFA9EC" stroke-width="0.5"/>
+<text x="430" y="311" font-size="11" font-weight="500" fill="#26215C" text-anchor="middle">재접속률</text>
+<text x="430" y="326" font-size="10" fill="#534AB7" text-anchor="middle">평가 세부 기준 핵심</text>
+<rect x="497" y="294" width="118" height="40" rx="6" fill="#fff" stroke="#AFA9EC" stroke-width="0.5"/>
+<text x="556" y="311" font-size="11" fill="#26215C" text-anchor="middle">활동 일수</text>
+<text x="556" y="326" font-size="10" fill="#534AB7" text-anchor="middle">누적 접속 날짜</text>
+<rect x="371" y="342" width="118" height="40" rx="6" fill="#fff" stroke="#AFA9EC" stroke-width="0.5"/>
+<text x="430" y="359" font-size="11" fill="#26215C" text-anchor="middle">총 체류시간</text>
+<text x="430" y="374" font-size="10" fill="#534AB7" text-anchor="middle">일당 평균 병기</text>
+<rect x="497" y="342" width="118" height="40" rx="6" fill="#fff" stroke="#AFA9EC" stroke-width="0.5"/>
+<text x="556" y="359" font-size="11" fill="#26215C" text-anchor="middle">과제 완료</text>
+<text x="556" y="374" font-size="10" fill="#534AB7" text-anchor="middle">AI 과제 포함</text>
+<rect x="371" y="390" width="244" height="24" rx="6" fill="#fff" stroke="#AFA9EC" stroke-width="0.5"/>
+<text x="493" y="406" font-size="11" fill="#26215C" text-anchor="middle">📈 최근 7일 접속 추이 (막대 그래프)</text>
+<rect x="371" y="414" width="244" height="26" rx="6" fill="#fff" stroke="#AFA9EC" stroke-width="0.5"/>
+<text x="493" y="431" font-size="11" fill="#26215C" text-anchor="middle">🧾 셀 사용 내역 (+과제 / −구매)</text>
+
+<text x="340" y="466" font-size="11" fill="#5F5E5A" text-anchor="middle">표시된 항목은 모두 실제 구현 완료 — 리포트 지표는 전부 서버 집계 기준</text>
+</g>
+</svg>
