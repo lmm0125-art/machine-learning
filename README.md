@@ -4,12 +4,11 @@ An LSTM with attention pooling that reads raw motion-capture recordings of
 rehabilitation exercises and says **which exercise was performed** and **which
 part of the movement drove that decision**.
 
-[![CI](https://github.com/lmm0125-art/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/actions/workflows/ci.yml/badge.svg)](https://github.com/lmm0125-art/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/actions/workflows/ci.yml)
+[![CI](https://github.com/lmm0125-art/machine-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/lmm0125-art/machine-learning/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776ab.svg)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f6f9f.svg)](LICENSE)
 
-Course project for *Machine Learning (IC-PBL), 2025-Fall*, Hanyang University
-ERICA — Prof. Yongjae Yoo, industry mentor Dr. Young Hoon Ji (Hexar Humancare).
+Course project for *Machine Learning (IC-PBL), 2025-Fall*, Hanyang University — Prof. Yongjae Yoo, industry mentor Dr. Young Hoon Ji (Hexar Humancare).
 
 ```
 recording  ──►  split into repetitions  ──►  z-score  ──►  LSTM  ──►  attention  ──►  class
@@ -47,8 +46,8 @@ which a summary-statistics model cannot produce. See
 ## Quickstart
 
 ```bash
-git clone https://github.com/lmm0125-art/机器学习.git
-cd 机器学习
+git clone https://github.com/lmm0125-art/machine-learning.git
+cd machine-learning
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 ```
