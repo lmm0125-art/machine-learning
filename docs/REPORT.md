@@ -1,6 +1,6 @@
 # Explainable Classification of Rehabilitation Exercise Trajectories with an LSTM and Attention Pooling
 
-*Hanyang University ERICA — Machine Learning (IC-PBL), 2025-Fall — bubble team*
+*Hanyang University — Machine Learning (IC-PBL), 2025-Fall — bubble team*
 
 ---
 

@@ -8,8 +8,7 @@ part of the movement drove that decision**.
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776ab.svg)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f6f9f.svg)](LICENSE)
 
-Course project for *Machine Learning (IC-PBL), 2025-Fall*, Hanyang University
-ERICA — Prof. Yongjae Yoo, industry mentor Dr. Young Hoon Ji (Hexar Humancare).
+Course project for *Machine Learning (IC-PBL), 2025-Fall*, Hanyang University — Prof. Yongjae Yoo, industry mentor Dr. Young Hoon Ji (Hexar Humancare).
 
 ```
 recording  ──►  split into repetitions  ──►  z-score  ──►  LSTM  ──►  attention  ──►  class
