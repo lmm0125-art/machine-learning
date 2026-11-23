@@ -14,6 +14,7 @@ checked without re-training.
 | `data2_baseline_metrics.json` | Data2 only, logistic regression and SVM |
 | `data2_with_data1_metrics.json` | LSTM trained on Data1 + Data2 folds, tested on Data2 |
 | `data2_baseline_with_data1_metrics.json` | logreg / SVM trained on Data1 + Data2 folds, tested on Data2 |
+| `data2_attention_metrics.json` | the held-out Data2 fold behind `docs/figures/data2/` |
 | `demo_predictions_per_recording.csv` | predictions for the 20 unlabelled demo recordings |
 | `demo_predictions_per_repetition.csv` | the same, one row per repetition |
 

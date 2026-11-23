@@ -56,6 +56,22 @@ per-timestep attention map. On single cycles the SVM is strongest (0.939 ± 0.04
 The Data1-only row is a single release checkpoint scored on all of Data2; the
 other rows are 15-run CV means.
 
+The Data2 heat-maps below come from the Data1+Data2 LSTM checkpoint on its held-out
+Data2 fold (5 recordings, 18 repetitions; 0.800 per-recording accuracy). They show
+where the model attended during each movement, not the accuracy of the best model:
+the best Data2 model is logistic regression, which has no attention output.
+
+![Data2 attention examples](docs/figures/data2/attention_examples.svg)
+
+*Data2 held-out repetitions. The peaks sit at different phases for different
+classes — the same per-sample pattern seen on Data1.*
+
+![Data2 attention profile](docs/figures/data2/attention_profile.svg)
+
+*Data2 class-averaged attention. `diagonal_right` peaks at the end, `diagonal_left`
+near the start; the other two are close to uniform. No single key frame is shared
+across classes.*
+
 The classical baseline wins on single cycles on both releases — with 34 and 28
 recordings that is the honest result, not a bug. On Data1 the LSTM's advantage
 appears once repetitions of a recording are pooled; on Data2 even the pooled

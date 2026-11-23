@@ -1,0 +1,139 @@
+{
+  "split": "test",
+  "metrics": {
+    "accuracy": 0.6111111111111112,
+    "macro_f1": 0.5108225108225108,
+    "weighted_f1": 0.605258938592272,
+    "per_class": {
+      "circle": {
+        "precision": 0.5,
+        "recall": 0.2857142857142857,
+        "f1": 0.36363636363636365,
+        "support": 7
+      },
+      "diagonal_left": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "support": 3
+      },
+      "diagonal_right": {
+        "precision": 0.3333333333333333,
+        "recall": 0.6666666666666666,
+        "f1": 0.4444444444444444,
+        "support": 3
+      },
+      "horizontal": {
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.8888888888888888,
+        "support": 5
+      },
+      "vertical": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      }
+    },
+    "n_samples": 18
+  },
+  "recording_metrics": {
+    "accuracy": 0.8,
+    "macro_f1": 0.6666666666666666,
+    "weighted_f1": 0.7999999999999999,
+    "per_class": {
+      "circle": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "support": 2
+      },
+      "diagonal_left": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 1
+      },
+      "diagonal_right": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 1
+      },
+      "horizontal": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 1
+      },
+      "vertical": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      }
+    },
+    "n_samples": 5
+  },
+  "sources": [
+    "circle/11.txt",
+    "circle/11.txt",
+    "circle/11.txt",
+    "circle/11.txt",
+    "circle/14.txt",
+    "circle/14.txt",
+    "circle/14.txt",
+    "diagonal_left/10.txt",
+    "diagonal_left/10.txt",
+    "diagonal_left/10.txt",
+    "diagonal_right/12.txt",
+    "diagonal_right/12.txt",
+    "diagonal_right/12.txt",
+    "horizontal/7.txt",
+    "horizontal/7.txt",
+    "horizontal/7.txt",
+    "horizontal/7.txt",
+    "horizontal/7.txt"
+  ],
+  "y_true": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "y_pred": [
+    0,
+    2,
+    2,
+    0,
+    2,
+    1,
+    2,
+    1,
+    1,
+    1,
+    2,
+    0,
+    2,
+    3,
+    3,
+    3,
+    0,
+    3
+  ]
+}

@@ -209,6 +209,28 @@ remain stronger on single cycles (SVM 0.939) and on the pooled decision
 of accuracy. The Data1-only row is a single checkpoint scored on all of Data2;
 the other rows are 15-run CV means.
 
+The Data1+Data2 LSTM checkpoint was scored on its held-out Data2 fold (5
+recordings, 18 repetitions, 0.800 per-recording accuracy) to produce a new set of
+attention figures. The old `docs/submitted/Final report bubble.docx` had Data1 and
+Data2 heat-map panels, but they were unlabeled, had no class or accuracy context,
+and looked unlike the model's current attention output. Fig. 3b and 4b below use
+the same plotting code as the Data1 figures.
+
+![Data2 attention per repetition](figures/data2/attention_examples.svg)
+
+*Fig. 3b — Data2: attention weights of held-out repetitions. Four of the five
+classes are present in this fold.*
+
+![Data2 attention profile](figures/data2/attention_profile.svg)
+
+*Fig. 4b — Data2: class-averaged attention by relative position. `diagonal_right`
+peaks at the end (100 %) and `diagonal_left` near the start (9 %); `circle` and
+`horizontal` peak late (83 % / 100 %) but are closer to uniform.*
+
+These maps describe the **LSTM**, not the best-accuracy model (logistic
+regression), which has no attention output. Whether these peaks agree with a
+therapist's reading of the movement remains untested.
+
 ## 6. Discussion
 
 **The classical baseline is competitive, and that is the finding.** A linear model
