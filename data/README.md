@@ -6,14 +6,34 @@ Download them from the course page and place them as shown below.
 
 ```
 data/
-├── raw/                     # labelled recordings (Data1, distributed week 11)
+├── raw/                     # labelled recordings, Data1 (distributed week 11)
 │   ├── circle/*.txt
 │   ├── diagonal_left/*.txt
 │   ├── diagonal_right/*.txt
 │   ├── horizontal/*.txt
 │   └── vertical/*.txt
+├── raw2/                    # labelled recordings, Data2 (noisy release, week 13)
+│   ├── circle/*.txt
+│   ├── diagonal_left/*.txt
+│   ├── diagonal_right/*.txt
+│   ├── horizontal/*.txt
+│   └── vertical/*.txt
+├── combined/                # optional Data1 + Data2 training pool (generated)
 └── demo/                    # unlabelled recordings for the live demo
     └── *.txt
+```
+
+`raw2` follows the same 28-column format and the same five class folders as
+`raw`. It contains 28 recordings and 94 repetitions survive the default
+`min_length=40` filter. `combined/` is not shipped: build it by copying the two
+labelled sets into one tree with prefixed file names, or simply pass both roots
+to the training script:
+
+```bash
+# group CV on Data2, with Data1 used only as extra training data
+python -m rehab_cls.train --data-root data/raw2 --extra-data-root data/raw \
+    --cv 5 --val-frac 0.25 --features raw_delta --per-recording-norm \
+    --hidden 96 --dropout 0.4 --epochs 80 --patience 15
 ```
 
 `data/` is listed in `.gitignore` on purpose.

@@ -78,6 +78,19 @@ def collect_outputs(model, loader, device) -> Dict[str, object]:
     }
 
 
+def aggregate_by_recording(out: Dict[str, object]) -> tuple:
+    """Average repetition probabilities per recording, like the training report."""
+    buckets: Dict[str, List[np.ndarray]] = defaultdict(list)
+    truth: Dict[str, int] = {}
+    for i, source in enumerate(out["sources"]):
+        buckets[source].append(out["probs"][i])
+        truth[source] = int(out["y_true"][i])
+    sources = sorted(buckets)
+    y_true = np.asarray([truth[s] for s in sources])
+    y_pred = np.asarray([int(np.mean(np.stack(buckets[s]), axis=0).argmax()) for s in sources])
+    return y_true, y_pred
+
+
 def main(argv: List[str] | None = None) -> int:
     p = argparse.ArgumentParser(description="Evaluate a trained checkpoint.")
     p.add_argument("--checkpoint", required=True)
@@ -119,8 +132,12 @@ def main(argv: List[str] | None = None) -> int:
     out = collect_outputs(model, loader, device)
 
     metrics = classification_metrics(out["y_true"], out["y_pred"], labels)
+    rec_true, rec_pred = aggregate_by_recording(out)
+    recording_metrics = classification_metrics(rec_true, rec_pred, labels)
     print(f"split: {args.split} | n={metrics['n_samples']}")
     print(format_metrics(metrics, labels))
+    print(f"per recording | n={recording_metrics['n_samples']} | "
+          f"accuracy {recording_metrics['accuracy']:.4f} | macro-F1 {recording_metrics['macro_f1']:.4f}")
 
     if args.figures_dir:
         os.makedirs(args.figures_dir, exist_ok=True)
@@ -167,6 +184,7 @@ def main(argv: List[str] | None = None) -> int:
 
     if args.out_json:
         write_json(args.out_json, {"split": args.split, "metrics": metrics,
+                                  "recording_metrics": recording_metrics,
                                   "sources": out["sources"],
                                   "y_true": out["y_true"].tolist(),
                                   "y_pred": out["y_pred"].tolist()})

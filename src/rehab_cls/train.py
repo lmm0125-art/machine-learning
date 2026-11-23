@@ -56,6 +56,9 @@ from .utils import count_parameters, resolve_device, save_checkpoint, set_seed, 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Train the LSTM + attention motion classifier.")
     p.add_argument("--data-root", required=True, help="dataset root, <root>/<class>/*.txt")
+    p.add_argument("--extra-data-root", default=None,
+                   help="additional labelled recordings used only for training, never for "
+                        "validation or test (e.g. train on Data1 + Data2, test on Data2)")
     p.add_argument("--out-dir", default="runs/exp", help="checkpoint, metrics and figures")
     p.add_argument("--figures-dir", default=None, help="copy report figures here as well")
 
@@ -88,6 +91,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     # protocol
     p.add_argument("--cv", type=int, default=0, help="0 = single split, N = N-fold group CV")
+    p.add_argument("--val-frac", type=float, default=0.15,
+                   help="fraction of training recordings held out for early stopping; "
+                        "raise it for small datasets so every class is represented")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--seeds", type=int, default=1,
                    help="extra repetitions with seeds seed..seed+N-1")
@@ -148,13 +154,25 @@ def _carve_validation(data: MotionData, train_names: Sequence[str], frac: float,
     return set(fit_names.tolist()), set(val_names.tolist())
 
 
-def make_splits(data: MotionData, args, seed: int) -> List[Dict[str, MotionData]]:
+def _merge_train(split: Dict[str, MotionData], extra: MotionData | None,
+                 labels: Sequence[str]) -> Dict[str, MotionData]:
+    """Append extra recordings to the training part of a split only."""
+    if extra is None or not extra.segments:
+        return split
+    merged = dict(split)
+    merged["train"] = MotionData(list(split["train"].segments) + list(extra.segments), list(labels))
+    return merged
+
+
+def make_splits(data: MotionData, args, seed: int,
+                extra: MotionData | None = None) -> List[Dict[str, MotionData]]:
     """Return one split dict per fold (a single one when ``--cv 0``)."""
     if args.leaky_split:
-        return [split_by_sample(data, seed=seed)] if args.cv <= 1 else _leaky_folds(data, args.cv, seed)
+        splits = [split_by_sample(data, seed=seed)] if args.cv <= 1 else _leaky_folds(data, args.cv, seed)
+        return [_merge_train(s, extra, data.labels) for s in splits]
 
     if args.cv <= 1:
-        return [split_by_source(data, seed=seed)]
+        return [_merge_train(split_by_source(data, seed=seed), extra, data.labels)]
 
     from sklearn.model_selection import StratifiedGroupKFold
 
@@ -162,14 +180,18 @@ def make_splits(data: MotionData, args, seed: int) -> List[Dict[str, MotionData]
     folds = StratifiedGroupKFold(n_splits=args.cv, shuffle=True, random_state=seed)
     splits: List[Dict[str, MotionData]] = []
     for fold, (train_idx, test_idx) in enumerate(folds.split(names, targets, groups=names)):
-        fit_names, val_names = _carve_validation(data, names[train_idx], 0.15, seed)
+        fit_names, val_names = _carve_validation(data, names[train_idx], args.val_frac, seed)
         test_names = set(names[test_idx].tolist())
         splits.append(
-            {
-                "train": MotionData([s for s in data.segments if s.source in fit_names], data.labels),
-                "val": MotionData([s for s in data.segments if s.source in val_names], data.labels),
-                "test": MotionData([s for s in data.segments if s.source in test_names], data.labels),
-            }
+            _merge_train(
+                {
+                    "train": MotionData([s for s in data.segments if s.source in fit_names], data.labels),
+                    "val": MotionData([s for s in data.segments if s.source in val_names], data.labels),
+                    "test": MotionData([s for s in data.segments if s.source in test_names], data.labels),
+                },
+                extra,
+                data.labels,
+            )
         )
         assert fit_names.isdisjoint(test_names), f"fold {fold} leaks recordings"
     return splits
@@ -373,7 +395,7 @@ def fit_once(data: MotionData, split: Dict[str, MotionData], args, seed: int,
 # Main
 # --------------------------------------------------------------------------- #
 def train_on_everything(data: MotionData, args, seed: int, device: torch.device,
-                        epochs: int) -> Tuple[AttentionLSTM, FeatureScaler]:
+                        epochs: int, extra: MotionData | None = None) -> Tuple[AttentionLSTM, FeatureScaler]:
     """Refit on every recording with a fixed budget, for the released checkpoint.
 
     Cross-validation answers "how good is this model"; the artefact shipped for
@@ -381,8 +403,9 @@ def train_on_everything(data: MotionData, args, seed: int, device: torch.device,
     split and trains for the median number of epochs the folds needed.
     """
     set_seed(seed)
-    scaler = FeatureScaler.fit(data.segments, feature_mode=args.features)
-    dataset = MotionDataset(data.segments, scaler,
+    train_segments = list(data.segments) + (list(extra.segments) if extra is not None else [])
+    scaler = FeatureScaler.fit(train_segments, feature_mode=args.features)
+    dataset = MotionDataset(train_segments, scaler,
                             augmenter=np.random.default_rng(seed), feature_mode=args.features)
     loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True,
                         collate_fn=collate, num_workers=0)
@@ -427,6 +450,24 @@ def main(argv: List[str] | None = None) -> int:
     print(f"loaded {len(data.segments)} repetitions from {len(set(data.groups()))} recordings")
     print(f"class counts (repetitions): {data.class_counts()}")
 
+    extra: MotionData | None = None
+    if args.extra_data_root:
+        extra = load_segments(
+            args.extra_data_root,
+            labels=DEFAULT_LABELS,
+            drop_columns=DEFAULT_DROP_COLUMNS,
+            min_length=args.min_length,
+            max_length=args.max_length or None,
+            split_repetitions=not args.no_split_reps,
+        )
+        if args.per_recording_norm:
+            extra = normalise_per_recording(extra)
+        # Keep source names from the extra corpus distinct from the target one.
+        for segment in extra.segments:
+            segment.source = f"extra/{segment.source}"
+        print(f"extra training data: {len(extra.segments)} repetitions from "
+              f"{len(set(extra.groups()))} recordings ({args.extra_data_root})")
+
     runs: List[Dict[str, object]] = []
     started = time.time()
     tag = os.path.basename(os.path.normpath(args.out_dir))
@@ -434,7 +475,7 @@ def main(argv: List[str] | None = None) -> int:
     for offset in range(args.seeds):
         seed = args.seed + offset
         set_seed(seed)
-        splits = make_splits(data, args, seed)
+        splits = make_splits(data, args, seed, extra)
         for fold, split in enumerate(splits):
             label = f"seed {seed}" + (f" fold {fold + 1}/{len(splits)}" if len(splits) > 1 else "")
             print(f"\n[{label}] train {len(split['train'])} / val {len(split['val'])} "
@@ -532,12 +573,13 @@ def main(argv: List[str] | None = None) -> int:
     if args.train_final:
         budget = args.final_epochs or int(np.median([r["best_epoch"] for r in runs]))
         print(f"\nrefitting on all {len(set(data.groups()))} recordings for {budget} epochs")
-        final_model, final_scaler = train_on_everything(data, args, args.seed, device, budget)
+        final_model, final_scaler = train_on_everything(data, args, args.seed, device, budget, extra)
         final_path = os.path.join(args.out_dir, "checkpoint_final.pt")
         save_checkpoint(
             final_path, final_model, final_scaler, data, DEFAULT_DROP_COLUMNS,
             metadata={
-                "trained_on": "all recordings",
+                "trained_on": "all recordings" + (" + extra data" if extra is not None else ""),
+                "extra_data_root": os.path.abspath(args.extra_data_root) if args.extra_data_root else None,
                 "epochs": budget,
                 "features": args.features,
                 "per_recording_norm": bool(args.per_recording_norm),

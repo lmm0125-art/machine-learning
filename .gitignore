@@ -21,6 +21,8 @@ runs/*/
 
 # Course data must not be redistributed
 data/raw/
+data/raw2/
+data/combined/
 data/demo/
 data/*.zip
 

@@ -32,16 +32,22 @@ angular velocities, an accelerometer block, a position block, and three further
 3-D blocks. Two structural facts drive the whole pipeline:
 
 * **Repetitions are delimited.** The line `s,0,,#` marks the boundary between two
-  repetitions of the same exercise. The 34 recordings contain 148 repetitions in
-  total.
+  repetitions of the same exercise. Data1 (34 recordings) contains 148
+  repetitions; Data2 (28 recordings) contains 120.
 * **Half the channels are inert.** Columns 0 and 1 are monotone counters
   (10 295 – 3 316 011) and columns 10–13, 17, 18 are exactly zero in every frame
   of the released data. They are removed, leaving 20 channels; first differences
   are optionally appended, giving 40.
 
 After dropping repetitions shorter than 40 frames — the truncated head and tail
-of each recording, some as short as a single frame — 118 repetitions remain.
-Recordings are the unit of the split; repetitions are the unit of prediction.
+of each recording, some as short as a single frame — 118 repetitions remain in
+Data1 and 94 in Data2. Recordings are the unit of the split; repetitions are the
+unit of prediction.
+
+Data2 is the noisy second release. It follows the same five-class, 28-column
+format but is smaller and shows more session-to-session drift; it is evaluated
+separately and is never mixed into the Data1 headline numbers. The two releases
+share no recording (file hashes are disjoint).
 
 ## 3. Method
 
@@ -49,7 +55,8 @@ Recordings are the unit of the split; repetitions are the unit of prediction.
 
 *Split into repetitions.* A whole recording concatenates three to five cycles, so
 its attention map would be an average over cycles. Splitting on `s` turns 34
-samples into 118 and makes each attention map correspond to one movement.
+Data1 samples into 118 and 28 Data2 samples into 94, and makes each attention
+map correspond to one movement.
 
 *Remove recording-level offset.* Sensor placement and posture shift all channels
 by a constant per session. Each recording is standardised against its own mean
@@ -102,12 +109,17 @@ inspected, not as a proof of causality.
 AdamW (lr 1 × 10⁻³, weight decay 1 × 10⁻⁴), cross-entropy with label smoothing
 0.05, gradient clipping at norm 5, batch size 16, 80 epochs.
 
-Because 34 recordings make a single split extremely noisy, the headline numbers
-come from **stratified 5-fold group cross-validation over recordings**, repeated
-with three seeds (15 runs). Folds are built with `StratifiedGroupKFold` on
+Because the releases are small (34 and 28 recordings), a single split is extremely
+noisy, so the headline numbers come from **stratified 5-fold group
+cross-validation over recordings**, repeated with three seeds (15 runs). Folds are built with `StratifiedGroupKFold` on
 recording identifiers, so no repetition of a test recording ever appears in
 training. The normaliser is fitted inside each fold. A single seeded hold-out
 split is reported separately, and is the one used for the figures.
+
+On Data2 the inner validation split uses 25 % of the training recordings
+(`--val-frac 0.25`): 15 % of 22 recordings is three recordings, which cannot cover
+five classes and produced a degenerate validation F1 in the first run. The test
+folds are unchanged, so the reported Data2 scores remain out-of-sample.
 
 ## 4. Implementation
 
@@ -164,17 +176,51 @@ per-recording normalisation mostly helps the pooled decision. Second, the
 differences between rows are within one standard deviation, so with 34 recordings
 we should not over-interpret the ordering.
 
+### 5.1 Data2
+
+Data2 is a separate, noisier release (28 recordings, 94 usable repetitions).
+Because 15 % of its training recordings leaves only three validation recordings —
+not enough to cover five classes — the Data2-only runs use `--val-frac 0.25`.
+Three protocols are reported:
+
+* **Transfer** — the Data1 release checkpoint, with no Data2 training data.
+* **Data2 only** — 5-fold group CV on Data2 (3 seeds).
+* **Data1 + Data2** — Data1 is appended to the training part of every Data2 fold;
+  it is never added to validation or test. This is the setting that answers
+  "does the first release help on the second?".
+
+| training data | model | per repetition | per recording | per-recording macro-F1 |
+|---|---|---|---|---|
+| Data1 only | LSTM + attention | 0.702 | 0.821 | 0.824 |
+| Data2 only | LSTM + attention | 0.571 ± 0.167 | 0.656 ± 0.241 | 0.536 ± 0.254 |
+| Data2 only | SVM (RBF) | 0.849 ± 0.098 | 0.907 ± 0.130 | 0.720 ± 0.172 |
+| Data2 only | logistic regression | 0.841 ± 0.115 | 0.918 ± 0.130 | 0.736 ± 0.168 |
+| Data1 + Data2 | LSTM + attention | 0.780 ± 0.094 | 0.884 ± 0.134 | 0.706 ± 0.196 |
+| Data1 + Data2 | SVM (RBF) | **0.939 ± 0.046** | 0.964 ± 0.071 | 0.784 ± 0.157 |
+| Data1 + Data2 | logistic regression | 0.908 ± 0.079 | **0.967 ± 0.067** | **0.788 ± 0.153** |
+
+**The best result on Data2 is logistic regression trained on Data1 + Data2:
+0.967 ± 0.067 per-recording accuracy and 0.788 ± 0.153 per-recording macro-F1.**
+The best LSTM result is 0.884 ± 0.134 per recording. The practical finding is
+that Data2 alone is too small for the recurrent model, but adding Data1 to the
+training folds recovers most of the gap (0.656 → 0.884). The classical models
+remain stronger on single cycles (SVM 0.939) and on the pooled decision
+(logreg 0.967); the LSTM's contribution is the attention map, not the last point
+of accuracy. The Data1-only row is a single checkpoint scored on all of Data2;
+the other rows are 15-run CV means.
+
 ## 6. Discussion
 
 **The classical baseline is competitive, and that is the finding.** A linear model
 on six summary statistics per channel classifies single repetitions better than
-the recurrent network (0.88 vs 0.79). With 34 recordings this is expected: a
-global summary is a strong prior, and an LSTM has to learn the same invariances
-from very few examples. The LSTM only pulls ahead once the repetitions of a
-recording are pooled (0.93 vs 0.89), which is precisely the multi-cycle evidence
-the summary model throws away by averaging. We report this rather than tuning the
-baseline down: the honest claim is that the recurrent model buys *localisation*,
-not accuracy, on data of this size.
+the recurrent network (0.88 vs 0.79 on Data1; 0.939 vs 0.780 on Data2 when both
+see both releases). With 34 and 28 recordings this is expected: a global summary
+is a strong prior, and an LSTM has to learn the same invariances from very few
+examples. On Data1 the LSTM pulls ahead once the repetitions of a recording are
+pooled (0.93 vs 0.89); on Data2 it does not — logistic regression wins even on the
+pooled decision (0.967 vs 0.884). We report this rather than tuning the baseline
+down: the honest claim is that the recurrent model buys *localisation*, not
+accuracy, on data of this size.
 
 **Attention does not collapse to one frame.** The class-averaged attention
 profile is close to uniform (Fig. 4), while individual repetitions show sharp
@@ -220,26 +266,30 @@ zero accelerometer block) are missing from this release.
   class weighting was not needed; macro-F1 is reported alongside accuracy in case
   a future release is less balanced.
 
-**Limitations.** Cross-subject generalisation is untested: the dataset has one
+**Limitations.** Cross-subject generalisation is still untested: Data1 has one
 recording session per class, so the per-recording normalisation may be doing work
-that a second subject would break. Only the first dataset is evaluated here; the
-noisy second set was not part of these experiments, so robustness to noise
-remains an open question. Finally, 34 recordings put a floor under the standard
-deviation: differences below roughly 0.1 in the tables above should not be read
-as real.
+that a second subject would break. Data2 adds a second, noisier release but not a
+new subject: the LSTM trained on Data2 alone reaches only 0.656 per recording, and
+adding Data1 lifts it to 0.884, which suggests the model still leans on Data1's
+session structure. The best Data2 result is logistic regression at 0.967 per
+recording, so the LSTM is not the accuracy leader on the noisy release. Finally,
+62 recordings across both releases put a floor under the standard deviation:
+differences below roughly 0.1 in the tables above should not be read as real.
 
 ## 7. Conclusion
 
 A small LSTM with masked attention pooling classifies rehabilitation exercise
-recordings at 0.93 accuracy per recording under group cross-validation, while
-producing a per-timestep attention map that can be inspected next to the
-trajectory. The honest summary of the experiments is narrower than "deep learning
-beats classical methods": on 34 recordings a summary-statistics model is at least
-as accurate per movement cycle, and the recurrent model's contribution is the
-pooled multi-cycle decision and the temporal localisation. Future work should add
-subjects, add the noisy release, and test whether the attention peaks agree with
-therapists' annotations — which is the only way to know whether the explanation is
-useful rather than merely presentable.
+recordings at 0.931 per recording on Data1 and 0.884 on the noisy Data2 when
+Data1 is added to the training folds, while producing a per-timestep attention
+map that can be inspected next to the trajectory. The honest summary of the
+experiments is narrower than "deep learning beats classical methods": on 62
+recordings a summary-statistics model is at least as accurate, and the best Data2
+result is logistic regression at 0.967 per recording. Data2 confirms rather than
+overturns that finding — it is too small to train the recurrent model alone
+(0.656), and adding Data1 recovers most of the gap (0.884). Future work should add
+subjects and test whether the attention peaks agree with therapists' annotations —
+which is the only way to know whether the explanation is useful rather than
+merely presentable.
 
 ## References
 

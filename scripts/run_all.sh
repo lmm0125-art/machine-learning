@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Reproduce every number in docs/REPORT.md.
+# Reproduce every Data1 number in docs/REPORT.md.
+# Data2 is reproduced separately by scripts/run_data2.sh.
 #
 #   bash scripts/run_all.sh data/raw
 #

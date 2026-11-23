@@ -41,6 +41,8 @@ def featurise(data: MotionData) -> tuple:
 def main(argv: List[str] | None = None) -> int:
     p = argparse.ArgumentParser(description="Classical baseline for comparison.")
     p.add_argument("--data-root", required=True)
+    p.add_argument("--extra-data-root", default=None,
+                   help="additional labelled recordings used only for training")
     p.add_argument("--min-length", type=int, default=40)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--seeds", type=int, default=1)
@@ -56,6 +58,21 @@ def main(argv: List[str] | None = None) -> int:
     data = load_segments(args.data_root, labels=DEFAULT_LABELS,
                          drop_columns=DEFAULT_DROP_COLUMNS, min_length=args.min_length)
 
+    extra: MotionData | None = None
+    if args.extra_data_root:
+        extra = load_segments(args.extra_data_root, labels=DEFAULT_LABELS,
+                              drop_columns=DEFAULT_DROP_COLUMNS, min_length=args.min_length)
+        for segment in extra.segments:
+            segment.source = f"extra/{segment.source}"
+
+    def with_extra(split):
+        if extra is None or not extra.segments:
+            return split
+        return {
+            "train": MotionData(list(split["train"].segments) + list(extra.segments), data.labels),
+            "test": split["test"],
+        }
+
     models = {
         "logreg": lambda: make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000, C=1.0)),
         "svm_rbf": lambda: make_pipeline(
@@ -69,7 +86,7 @@ def main(argv: List[str] | None = None) -> int:
 
     def folds(seed: int):
         if args.cv <= 1:
-            yield split_by_source(data, seed=seed)
+            yield with_extra(split_by_source(data, seed=seed))
             return
         from sklearn.model_selection import StratifiedGroupKFold
 
@@ -80,10 +97,10 @@ def main(argv: List[str] | None = None) -> int:
         for train_idx, test_idx in cv.split(names, targets, groups=names):
             train_names = set(names[train_idx].tolist())
             test_names = set(names[test_idx].tolist())
-            yield {
+            yield with_extra({
                 "train": MotionData([s for s in data.segments if s.source in train_names], data.labels),
                 "test": MotionData([s for s in data.segments if s.source in test_names], data.labels),
-            }
+            })
 
     for offset in range(args.seeds):
         seed = args.seed + offset
